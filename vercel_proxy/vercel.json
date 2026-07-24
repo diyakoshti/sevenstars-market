@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://REPLACE-WITH-YOUR-RENDER-DOMAIN.onrender.com/$1"
+    }
+  ]
+}

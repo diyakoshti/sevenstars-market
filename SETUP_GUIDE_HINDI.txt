@@ -1,0 +1,37 @@
+SEVENSTARS MARKET - PYCHARM SETUP
+=================================
+
+1. ZIP को Extract All करें।
+
+2. Extract हुए sevenstars_market_project folder के अंदर की सभी files और
+   folders copy करें।
+
+3. इन्हें अपने existing folder में paste करें:
+   C:\Users\DELL\PycharmProjects\sevenstars_market
+
+4. Replace/overwrite पूछा जाए तो Yes करें। .venv folder को delete या replace
+   न करें।
+
+5. PyCharm में sevenstars_market project खोलें और Terminal में चलाएँ:
+
+   python -m pip install -r requirements.txt
+   Copy-Item .env.example .env
+   python manage.py makemigrations
+   python manage.py migrate
+   python manage.py createsuperuser
+   python manage.py runserver
+
+6. Website:
+   http://127.0.0.1:8000/
+
+7. Django Admin:
+   http://127.0.0.1:8000/admin/
+
+8. Cloudinary और Razorpay test keys बाद में .env file में भरनी हैं।
+   .env को कभी GitHub पर upload नहीं करना है।
+
+IMPORTANT:
+- Public registration से हमेशा User role बनता है।
+- Admin Panel से किसी account का role Sales Person किया जा सकता है।
+- केवल Admin/is_staff account /admin/ खोल सकता है।
+- Sales Person केवल अपने products edit/delete कर सकता है।
