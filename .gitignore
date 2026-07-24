@@ -10,3 +10,4 @@ staticfiles/
 .vscode/
 .DS_Store
 *.log
+img.png
