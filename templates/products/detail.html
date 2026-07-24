@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} · SevenStars Market{% endblock %}
+{% block content %}
+<section class="product-detail">
+    <div class="detail-image"><img src="{{ product.image.url }}" alt="{{ product.name }}"><span>Premium Collection</span></div>
+    <div class="detail-copy">
+        <span class="eyebrow">{{ product.category.name }}</span><h1>{{ product.name }}</h1><div class="rating">★★★★★ <small>Premium choice</small></div>
+        <h2>₹{{ product.price }}</h2><p class="description">{{ product.description }}</p>
+        <p class="stock {% if product.stock == 0 %}out{% endif %}">{% if product.stock %}In stock · {{ product.stock }} available{% else %}Out of stock{% endif %}</p>
+        <div class="detail-actions">
+            {% if user.is_authenticated and product.stock %}<a class="button primary" href="{% url 'cart:add' product.id %}">Add to Cart</a><a class="button secondary" href="{% url 'wishlist:toggle' product.id %}">♥ Wishlist</a>{% elif not user.is_authenticated %}<a class="button primary" href="{% url 'accounts:login' %}?next={{ request.path }}">Login to Purchase</a>{% endif %}
+        </div>
+        {% if user.is_authenticated and user.role == 'admin' or user == product.owner %}<div class="manage-actions"><a href="{% url 'products:update' product.slug %}">Edit</a><a href="{% url 'products:delete' product.slug %}">Delete</a></div>{% endif %}
+    </div>
+</section>
+{% if related_products %}<section class="section"><div class="section-heading"><h2>You may also love</h2></div><div class="product-grid">{% for product in related_products %}{% include "products/_card.html" %}{% endfor %}</div></section>{% endif %}
+{% endblock %}

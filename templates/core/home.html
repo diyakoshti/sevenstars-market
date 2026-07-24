@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}SevenStars Market — Shop Beyond the Ordinary{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">SEVEN STARS · ONE BEAUTIFUL MARKET</span>
+        <h1>Welcome to <span>SevenStars Market</span></h1>
+        <p>Where every choice shines, and every order carries a little purple love.</p>
+        <a class="button primary" href="{% url 'products:list' %}">Explore the Magic</a>
+    </div>
+    <div class="sevenstar-emblem" aria-label="Seven-star BTS-inspired emblem">
+    <span class="star star-1">✦</span>
+    <span class="star star-2">✦</span>
+    <span class="star star-3">✦</span>
+    <span class="star star-4">✦</span>
+    <span class="star star-5">✦</span>
+    <span class="star star-6">✦</span>
+    <span class="star star-7">✦</span>
+
+    <span class="star-line line-left"></span>
+    <span class="star-line line-right"></span>
+</div>
+</section>
+
+<section class="section">
+    <div class="section-heading"><div><span class="eyebrow">CURATED FOR YOU</span><h2>Featured Products</h2></div><a href="{% url 'products:list' %}">View all →</a></div>
+    <div class="product-grid">
+        {% for product in featured_products %}
+            {% include "products/_card.html" %}
+        {% empty %}
+            <div class="empty-state"><h3>Your premium collection starts here.</h3><p>Add products from the admin or seller dashboard.</p></div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="benefits">
+    <article><span>✦</span><h3>Premium Picks</h3><p>Thoughtfully selected products with quality at the centre.</p></article>
+    <article><span>♥</span><h3>Shopping With Love</h3><p>A smooth, warm and secure experience from cart to delivery.</p></article>
+    <article><span>⌁</span><h3>Secure Checkout</h3><p>Verified Razorpay test payments protect every order.</p></article>
+</section>
+{% endblock %}

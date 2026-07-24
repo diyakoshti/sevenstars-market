@@ -1,0 +1,55 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}SevenStars Market{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<nav class="navbar">
+    <a class="brand" href="{% url 'core:home' %}">
+        <span class="brand-mark">✦<i></i>✦<i></i>✦<i></i>✦<i></i>✦<i></i>✦<i></i>✦</span>
+        <span>SevenStars <b>Market</b></span><em>♥</em>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links">
+        <a href="{% url 'core:home' %}">Home</a>
+        <a href="{% url 'products:list' %}">Shop</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'wishlist:detail' %}">Wishlist</a>
+            <a href="{% url 'cart:detail' %}">Cart <span class="badge">{{ cart_count }}</span></a>
+            <a href="{% url 'orders:history' %}">Orders</a>
+            {% if user.role == 'admin' or user.role == 'sales' %}
+                <a href="{% url 'products:create' %}">Add Product</a>
+                <a href="{% url 'dashboard:index' %}">Dashboard</a>
+            {% endif %}
+            {% if user.is_staff %}<a href="/admin/">Admin Panel</a>{% endif %}
+            <form action="{% url 'accounts:logout' %}" method="post">{% csrf_token %}<button class="link-button">Logout</button></form>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a>
+            <a class="nav-cta" href="{% url 'accounts:register' %}">Join Us</a>
+        {% endif %}
+    </div>
+</nav>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}
+</div>
+{% endif %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer>
+    <div><strong>SevenStars Market ♥</strong><p>Where every choice shines and every order carries a little purple love.</p></div>
+    <div><p>Secure payments · Premium products · Thoughtful shopping</p><small>© 2026 SevenStars Market</small></div>
+</footer>
+<script src="{% static 'js/main.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Your Cart · SevenStars Market{% endblock %}
+{% block content %}
+<section class="section narrow"><div class="section-heading"><div><span class="eyebrow">YOUR SELECTION</span><h1>Shopping Cart</h1></div></div>
+{% if items %}
+<div class="cart-layout"><div class="cart-items">
+{% for item in items %}<article class="cart-item"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"><div><a href="{{ item.product.get_absolute_url }}"><h3>{{ item.product.name }}</h3></a><p>₹{{ item.product.price }} each</p></div>
+<form method="post" action="{% url 'cart:update' item.id %}">{% csrf_token %}<input type="number" name="quantity" min="1" max="{{ item.product.stock }}" value="{{ item.quantity }}"><button>Update</button></form>
+<strong>₹{{ item.subtotal }}</strong><form method="post" action="{% url 'cart:remove' item.id %}">{% csrf_token %}<button class="remove">Remove</button></form></article>{% endfor %}
+</div><aside class="summary"><span class="eyebrow">ORDER SUMMARY</span><div><span>Total</span><strong>₹{{ total }}</strong></div><a class="button primary full" href="{% url 'orders:checkout' %}">Secure Checkout</a><small>Payment securely verified by Razorpay</small></aside></div>
+{% else %}<div class="empty-state"><h2>Your cart is waiting for a little purple love.</h2><a class="button primary" href="{% url 'products:list' %}">Start Shopping</a></div>{% endif %}
+</section>
+{% endblock %}
