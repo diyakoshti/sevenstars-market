@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Sales Dashboard · SevenStars Market{% endblock %}
+{% block content %}<section class="section"><div class="section-heading"><div><span class="eyebrow">SALES STUDIO</span><h1>Your Product Performance</h1></div><a class="button primary" href="{% url 'products:create' %}">Add Product</a></div>
+<div class="stats"><article><span>Your Products</span><strong>{{ my_products }}</strong></article><article><span>Sales Value</span><strong>₹{{ sales_total }}</strong></article></div>
+<div class="panel"><h2>Orders containing your products</h2><div class="table-wrap"><table><thead><tr><th>Order</th><th>Product</th><th>Buyer</th><th>Quantity</th></tr></thead><tbody>{% for item in items %}<tr><td>#{{ item.order.id }}</td><td>{{ item.product_name }}</td><td>{{ item.order.user.username }}</td><td>{{ item.quantity }}</td></tr>{% empty %}<tr><td colspan="4">No sales yet.</td></tr>{% endfor %}</tbody></table></div></div></section>{% endblock %}

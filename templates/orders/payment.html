@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Complete Payment · SevenStars Market{% endblock %}
+{% block content %}<section class="form-page"><div class="checkout-card center"><span class="eyebrow">RAZORPAY TEST MODE</span><h1>Complete your payment</h1><p>Total payable</p><div class="payment-amount">₹{{ total }}</div><button id="pay-button" class="button primary">Pay securely</button><p class="secure-note">Your order is created only after backend signature verification.</p></div></section>
+<form id="verify-form" action="{% url 'orders:verify_payment' %}" method="post" hidden>{% csrf_token %}<input name="razorpay_order_id" id="rp-order"><input name="razorpay_payment_id" id="rp-payment"><input name="razorpay_signature" id="rp-signature"></form>
+{% endblock %}
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById("pay-button").addEventListener("click", function () {
+  const options = {
+    key: "{{ razorpay_key_id|escapejs }}",
+    amount: "{{ amount_paise }}",
+    currency: "INR",
+    name: "SevenStars Market",
+    description: "Premium order",
+    order_id: "{{ razorpay_order_id|escapejs }}",
+    handler: function (response) {
+      document.getElementById("rp-order").value = response.razorpay_order_id;
+      document.getElementById("rp-payment").value = response.razorpay_payment_id;
+      document.getElementById("rp-signature").value = response.razorpay_signature;
+      document.getElementById("verify-form").submit();
+    },
+    theme: {color: "#6d28d9"}
+  };
+  new Razorpay(options).open();
+});
+</script>
+{% endblock %}

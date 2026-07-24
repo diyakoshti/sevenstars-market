@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Demo Payment · SevenStars Market{% endblock %}
+{% block content %}
+<section class="form-page">
+    <div class="checkout-card center">
+        <span class="eyebrow">SAFE DEMONSTRATION MODE</span>
+        <h1>Demo Payment Simulator</h1>
+        <p>This is a simulated checkout for project testing. No bank, card, UPI or real money is involved.</p>
+        <div class="payment-amount">₹{{ total }}</div>
+        <p class="secure-note">A signed backend token is verified before the demo order is created.</p>
+
+        <form method="post" action="{% url 'orders:demo_payment' %}">
+            {% csrf_token %}
+            <input type="hidden" name="demo_token" value="{{ demo_token }}">
+            <button class="button primary full" type="submit" name="result" value="success">
+                Simulate Successful Payment
+            </button>
+            <button class="button secondary full demo-fail-button" type="submit" name="result" value="failure">
+                Simulate Failed Payment
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

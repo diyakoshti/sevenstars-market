@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Order History · SevenStars Market{% endblock %}
+{% block content %}<section class="section narrow"><div class="section-heading"><div><span class="eyebrow">YOUR JOURNEY</span><h1>Order History</h1></div></div>
+{% for order in orders %}<article class="order-card"><header><div><strong>Order #{{ order.id }}</strong><small>{{ order.created_at|date:"d M Y, h:i A" }}</small></div><span class="status">{{ order.get_status_display }}</span></header>{% for item in order.items.all %}<div class="order-line"><span>{{ item.product_name }} × {{ item.quantity }}</span><strong>₹{{ item.subtotal }}</strong></div>{% endfor %}<footer><span>Total paid</span><strong>₹{{ order.total_amount }}</strong></footer></article>
+{% empty %}<div class="empty-state"><h2>No orders yet</h2><a class="button primary" href="{% url 'products:list' %}">Find Something Special</a></div>{% endfor %}</section>{% endblock %}

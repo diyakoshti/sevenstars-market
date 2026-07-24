@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Shop · SevenStars Market{% endblock %}
+{% block content %}
+<header class="page-header"><span class="eyebrow">THE SEVENSTARS COLLECTION</span><h1>Discover something extraordinary</h1></header>
+<section class="shop-layout">
+    <form class="filters" method="get">
+        <h3>Find your match</h3>
+        <label>Keyword<input name="q" value="{{ request.GET.q }}" placeholder="Search products"></label>
+        <label>Category<select name="category"><option value="">All categories</option>{% for category in categories %}<option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>{{ category.name }}</option>{% endfor %}</select></label>
+        <div class="price-row"><label>Min price<input type="number" name="min_price" value="{{ request.GET.min_price }}"></label><label>Max price<input type="number" name="max_price" value="{{ request.GET.max_price }}"></label></div>
+        <button class="button primary full">Apply Filters</button><a class="clear-link" href="{% url 'products:list' %}">Clear filters</a>
+    </form>
+    <div class="product-grid">{% for product in products %}{% include "products/_card.html" %}{% empty %}<div class="empty-state"><h3>No products found</h3><p>Try changing your search or filters.</p></div>{% endfor %}</div>
+</section>
+{% endblock %}

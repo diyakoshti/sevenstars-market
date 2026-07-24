@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Checkout · SevenStars Market{% endblock %}
+{% block content %}<section class="form-page"><div class="checkout-card"><span class="eyebrow">SECURE CHECKOUT</span><h1>Almost yours</h1><div class="checkout-total"><span>Amount to pay</span><strong>₹{{ total }}</strong></div><form method="post" class="styled-form">{% csrf_token %}{{ form.as_p }}<button class="button primary full">Continue to Razorpay</button></form><p class="secure-note">Test mode only · No real money will be charged</p></div></section>{% endblock %}
