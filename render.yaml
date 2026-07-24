@@ -2,6 +2,7 @@ services:
   - type: web
     name: sevenstars-market
     runtime: python
+    plan: free
     buildCommand: "bash build.sh"
     startCommand: "gunicorn sevenstars.wsgi:application"
     envVars:
@@ -20,5 +21,6 @@ services:
 
 databases:
   - name: sevenstars-db
+    plan: free
     databaseName: sevenstars
     user: sevenstars
